@@ -3,7 +3,7 @@
 **Devoir Pratique n°3 — NLP avec PyTorch : Fine-tuning de BERT**  
 Master IA / Data Science — Deep Learning
 
-> **Binôme :** [Nom Étudiant 1] & [Nom Étudiant 2]  
+> **Binôme :** Ghoulam Ndiaye & El hadj malick Samb  
 > **Dataset :** BBC News (5 catégories)
 
 ---
