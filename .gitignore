@@ -1,0 +1,48 @@
+# =============================================================================
+# .gitignore — Projet BERT Classification
+# =============================================================================
+
+# Environnements virtuels
+venv/
+env/
+.env/
+.venv/
+ENV/
+
+# Checkpoints lourds (modèles sauvegardés)
+checkpoints/*.pt
+checkpoints/resume.pt
+
+# Dataset (trop lourd pour GitHub)
+data/*.csv
+data/*.tsv
+data/*.json
+
+# Fichiers générés par l'entraînement
+label_map.json
+*.pt
+*.pth
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Logs Weights & Biases
+wandb/
+
+# Jupyter Notebooks (checkpoints)
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

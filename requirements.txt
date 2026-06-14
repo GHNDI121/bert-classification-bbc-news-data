@@ -1,0 +1,10 @@
+torch
+transformers
+gradio
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+tqdm
+wandb
