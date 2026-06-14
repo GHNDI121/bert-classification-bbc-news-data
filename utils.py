@@ -5,7 +5,7 @@ Fonctions utilitaires pour le projet BERT :
   - compute_metrics      : accuracy + F1-score macro
   - count_parameters     : nombre de paramètres entraînables
   - plot_curves          : courbes loss / accuracy par epoch
-  - plot_confusion_matrix: matrice de confusion
+  - plot_confusion_matrix: matrice de confusion 
 """
 
 import random
