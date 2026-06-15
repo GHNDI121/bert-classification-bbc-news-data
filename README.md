@@ -3,7 +3,7 @@
 **Devoir Pratique n°3 — NLP avec PyTorch : Fine-tuning de BERT**  
 Master IA / Data Science — Deep Learning
 
-> **Binôme :** Ghoulam Ndiaye & El hadj malick Samb  
+> **Binôme :** Ghoulam NDIAYE & El Hadji Malick SAMB  
 > **Dataset :** BBC News (5 catégories)
 
 ---
@@ -168,7 +168,7 @@ interface.launch(share=True)  # génère un lien https://xxxxx.gradio.live
 
 ```bash
 # 1. Cloner
-git clone https://github.com/<votre-user>/bert-classification-bbc-news-data.git
+git clone https://github.com/<votre-user>/bert-classification-bbcnews.git
 cd bert-classification-bbcnews
 
 # 2. Environnement virtuel
@@ -188,3 +188,71 @@ python demo.py
 
 ---
 
+## 5. Résultats
+
+> *(À compléter après l'entraînement)*
+
+| Métrique | Valeur |
+|----------|--------|
+| Val Accuracy | 0.99101 |
+| Val F1 (macro) | 0.99098 |
+| Best val_loss | 0.04871 |
+
+**Courbes d'apprentissage :**  
+![Courbes](checkpoints/training_curves.png)
+
+**Matrice de confusion :**  
+![Confusion](checkpoints/confusion_matrix.png)
+
+---
+
+## 6. Démo Gradio
+
+> ![Démo Gradio](checkpoints/gradio_demo.png)
+
+---
+
+## 7. Répartition du Travail
+
+| Tâche | Responsable |
+|-------|-------------|
+| `dataset.py` + `model.py` |  Ghoulam NDIAYE |
+| `train.py` + `utils.py` | El Hadji Malick SAMB & Ghoulam NDIAYE |
+| `demo.py` + README | El Hadji Malick SAMB & Ghoulam NDIAYE |
+
+---
+
+## 8. Difficultés Rencontrées
+
+### Installation CUDA et PyTorch
+- **Problème :** PyTorch installé en version CPU-only malgré la présence d'une GPU NVIDIA.
+- **Solution :** Réinstaller PyTorch avec support CUDA : 
+  ```bash
+  pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+  ```
+
+### Gestion des chemins de fichiers
+- **Problème :** Les chemins absolus Windows causaient des erreurs lors du déplacement du projet ou du changement de répertoire de travail.
+- **Solution :** Utiliser des chemins relatifs au script (`os.path.abspath(__file__)`) dans `demo.py` et `train.py` pour plus de portabilité.
+
+### Choix de `max_length`
+- **Problème :** Un `max_length` trop petit (128) aurait tronqué ~20% des articles BBC (moyenne 379 mots).
+- **Analyse :** Avec `max_length=256`, ~95% des textes sont couverts sans exploser la VRAM sur GPU 4GB.
+- **Décision :** Prioriser la couverture sémantique sur la VRAM, acceptable pour batch_size=16.
+
+### Déséquilibre des classes
+- **Observation :** Sport (511 ex.) vs Entertainment (386 ex.) = ratio 1.32:1.
+- **Décision :** Split stratifié suffisant ; pas besoin de sur-échantillonnage ni class weights.
+
+### Convergence et overfitting
+- **Approche :** BERT converge rapidement (4 epochs suffit).
+- **Safeguard :** Scheduler avec warmup linéaire (10%) + LR faible (3e-5) pour stabiliser le fine-tuning.
+
+---
+
+## Références
+
+- [HuggingFace Transformers](https://huggingface.co/docs/transformers)
+- [PyTorch Documentation](https://pytorch.org/docs)
+- [Gradio](https://www.gradio.app/)
+- BERT: [Devlin et al., 2018](https://arxiv.org/abs/1810.04805)
